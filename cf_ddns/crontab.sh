@@ -1,8 +1,10 @@
 #!bin/bash
+
 # 把文件复制一份
 if [ ! -f /var/spool/cron/crontabs/root.bak ]; then 
   cp /var/spool/cron/crontabs/root /var/spool/cron/crontabs/root.bak; 
 fi
+
 # 删掉原来的文件
 rm /var/spool/cron/crontabs/root
 
