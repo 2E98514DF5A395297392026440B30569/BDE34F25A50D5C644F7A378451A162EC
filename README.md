@@ -1,0 +1,2 @@
+# BDE34F25A50D5C644F7A378451A162EC
+cloudflare优选ip，自动ddns
