@@ -12,5 +12,5 @@ RUN apk --update add tzdata && \
 WORKDIR /app
 COPY . /app
 RUN chmod +x /app/start.sh \
-    chmod +x /app/cf_ddns/CloudflareST
+ && chmod +x /app/cf_ddns/CloudflareST
 CMD ["/bin/sh", "-c", "/app/start.sh && tail -f /dev/null"]
