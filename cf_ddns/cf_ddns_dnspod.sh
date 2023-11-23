@@ -39,7 +39,7 @@ CFST_P=$CFST_DN;
 
 #判断工作模式
 if [ "$IP_ADDR" = "ipv6" ] ; then
-  if [ ! -f "./cf_ddns/ipv6.txt" ]; then
+  if [ ! -f "/app/cf_ddns/ipv6.txt" ]; then
     echo "当前工作模式为ipv6，但该目录下没有【ipv6.txt】，请配置【ipv6.txt】。下载地址：https://github.com/XIU2/CloudflareSpeedTest/releases";
     exit 2;
   else
@@ -47,26 +47,6 @@ if [ "$IP_ADDR" = "ipv6" ] ; then
   fi
 else
   echo "当前工作模式为ipv4";
-fi
-
-
-
-#读取配置文件中的客户端
-case $clien in
-  "6") CLIEN=bypass;;
-  "5") CLIEN=openclash;;
-  "4") CLIEN=clash;;
-  "3") CLIEN=shadowsocksr;;
-  "2") CLIEN=passwall2;;
-  *) CLIEN=passwall;;
-esac
-
-#判断是否停止科学上网服务
-if [ "$pause" = "false" ] ; then
-  echo "按要求未停止科学上网服务";
-else
-  /etc/init.d/$CLIEN stop;
-  echo "已停止$CLIEN";
 fi
 
 #判断是否配置测速地址 
@@ -93,40 +73,29 @@ fi
 
 # 检查是否配置反代IP
 if [ "$IP_PR_IP" = "1" ] ; then
-  if [[ $(cat ./cf_ddns/.pr_ip_timestamp | jq -r ".pr1_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
-    curl -sSf -o ./cf_ddns/pr_ip.txt https://cf.vbar.fun/pr_ip.txt
-    echo "{\"pr1_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > ./cf_ddns/.pr_ip_timestamp
+  if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr1_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
+    curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/pr_ip.txt
+    echo "{\"pr1_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
     echo "已更新线路1的反向代理列表"
   fi
 elif [ "$IP_PR_IP" = "2" ] ; then
-  if [[ $(cat ./cf_ddns/.pr_ip_timestamp | jq -r ".pr2_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
-    curl -sSf -o ./cf_ddns/pr_ip.txt https://cf.vbar.fun/zip_baipiao_eu_org/pr_ip.txt
-    echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > ./cf_ddns/.pr_ip_timestamp
+  if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr2_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
+    curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/zip_baipiao_eu_org/pr_ip.txt
+    echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
     echo "已更新线路2的反向代理列表"
   fi
 fi
   
 if [ "$IP_PR_IP" -ne "0" ] ; then
-  $CloudflareST $CFST_URL_R -t $CFST_T -n $CFST_N -dn $CFST_DN -tl $CFST_TL -dt $CFST_DT -tp $CFST_TP -sl $CFST_SL -p $CFST_P -tlr $CFST_TLR $CFST_STM -f ./cf_ddns/pr_ip.txt -o ./cf_ddns/result.csv
+  $CloudflareST $CFST_URL_R -t $CFST_T -n $CFST_N -dn $CFST_DN -tl $CFST_TL -dt $CFST_DT -tp $CFST_TP -sl $CFST_SL -p $CFST_P -tlr $CFST_TLR $CFST_STM -f /app/cf_ddns/pr_ip.txt -o /app/cf_ddns/result.csv
 elif [ "$IP_ADDR" = "ipv6" ] ; then
   #开始优选IPv6
-  $CloudflareST $CFST_URL_R -t $CFST_T -n $CFST_N -dn $CFST_DN -tl $CFST_TL -dt $CFST_DT -tp $CFST_TP -tll $CFST_TLL -sl $CFST_SL -p $CFST_P -tlr $CFST_TLR $CFST_STM -f ./cf_ddns/ipv6.txt -o ./cf_ddns/result.csv
+  $CloudflareST $CFST_URL_R -t $CFST_T -n $CFST_N -dn $CFST_DN -tl $CFST_TL -dt $CFST_DT -tp $CFST_TP -tll $CFST_TLL -sl $CFST_SL -p $CFST_P -tlr $CFST_TLR $CFST_STM -f /app/cf_ddns/ipv6.txt -o /app/cf_ddns/result.csv
 else
   #开始优选IPv4
-  $CloudflareST $CFST_URL_R -t $CFST_T -n $CFST_N -dn $CFST_DN -tl $CFST_TL -dt $CFST_DT -tp $CFST_TP -tll $CFST_TLL -sl $CFST_SL -p $CFST_P -tlr $CFST_TLR $CFST_STM -f ./cf_ddns/ip.txt -o ./cf_ddns/result.csv
+  $CloudflareST $CFST_URL_R -t $CFST_T -n $CFST_N -dn $CFST_DN -tl $CFST_TL -dt $CFST_DT -tp $CFST_TP -tll $CFST_TLL -sl $CFST_SL -p $CFST_P -tlr $CFST_TLR $CFST_STM -f /app/cf_ddns/ipv4.txt -o /app/cf_ddns/result.csv
 fi
 echo "测速完毕";
-
-#判断是否重启科学服务
-if [ "$pause" = "false" ] ; then
-  echo "按要求未重启科学上网服务";
-  sleep 3s;
-else
-  /etc/init.d/$CLIEN restart;
-  echo "已重启$CLIEN";
-  echo "等待${sleepTime}秒后开始更新DNS！"
-  sleep ${sleepTime}s;
-fi
 
 # 开始循环
 echo "正在更新域名，请稍后...";
@@ -135,13 +104,13 @@ while [[ ${x} -lt $num ]]; do
   CDNhostname=${hostname[$x]};
   
   # 获取优选后的ip地址 
-  ipAddr=$(sed -n "$((x + 2)),1p" ./cf_ddns/result.csv | awk -F, '{print $1}');
-  ipSpeed=$(sed -n "$((x + 2)),1p" ./cf_ddns/result.csv | awk -F, '{print $6}');
+  ipAddr=$(sed -n "$((x + 2)),1p" /app/cf_ddns/result.csv | awk -F, '{print $1}');
+  ipSpeed=$(sed -n "$((x + 2)),1p" /app/cf_ddns/result.csv | awk -F, '{print $6}');
   if [ $ipSpeed = "0.00" ]; then
     echo "第$((x + 1))个---$ipAddr测速为0，跳过更新DNS，检查配置是否能正常测速！";
   else
     if [ "$IP_TO_HOSTS" = 1 ]; then
-      echo $ipAddr $CDNhostname >> ./cf_ddns/hosts_new
+      echo $ipAddr $CDNhostname >> /app/cf_ddns/hosts_new
     # else
       # echo "未配置hosts"
     fi
@@ -271,23 +240,13 @@ done > $informlog
 if [ "$IP_TO_HOSTS" = 1 ]; then
   if [ ! -f "/etc/hosts.old_cfstddns_bak" ]; then
     cp /etc/hosts /etc/hosts.old_cfstddns_bak
-    cat ./cf_ddns/hosts_new >> /etc/hosts
+    cat /app/cf_ddns/hosts_new >> /etc/hosts
   else
     rm /etc/hosts
     cp /etc/hosts.old_cfstddns_bak /etc/hosts
-    cat ./cf_ddns/hosts_new >> /etc/hosts
+    cat /app/cf_ddns/hosts_new >> /etc/hosts
     echo "hosts已更新"
     echo "hosts已更新" >> $informlog
-    rm ./cf_ddns/hosts_new
+    rm /app/cf_ddns/hosts_new
   fi
-fi
-#判断是否重启科学服务
-if [ "$pause" = "false" ] ; then
-  echo "按要求未重启科学上网服务";
-  sleep 3s;
-else
-  /etc/init.d/$CLIEN restart;
-  echo "已重启$CLIEN";
-  echo "等待${sleepTime}秒后开始更新DNS！"
-  sleep ${sleepTime}s;
 fi
