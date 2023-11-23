@@ -1,6 +1,6 @@
 #!/bin/bash
 # Default config file
-config_file="config.conf"
+config_file="/app/conf/config.conf"
 
 # Check if --cfg parameter is provided
 for i in "$@"
@@ -16,20 +16,20 @@ done
 # Source the config file
 source "$config_file"
 
-source ./cf_ddns/cf_check.sh
+source /app/cf_ddns/cf_check.sh
 
 case $DNS_PROVIDER in
     1)
-        source ./cf_ddns/cf_ddns_cloudflare.sh
+        source /app/cf_ddns/cf_ddns_cloudflare.sh
         ;;
     2)
-        source ./cf_ddns/cf_ddns_dnspod.sh
+        source /app/cf_ddns/cf_ddns_dnspod.sh
         ;;
     *)
         echo "未选择任何DNS服务商"
         ;;
 esac
 
-source ./cf_ddns/cf_push.sh
+source /app/cf_ddns/cf_push.sh
 
 exit 0;
