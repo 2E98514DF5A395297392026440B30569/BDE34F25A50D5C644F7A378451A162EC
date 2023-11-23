@@ -91,17 +91,6 @@ else
 fi
 echo "测速完毕";
 
-#判断是否重启科学服务
-if [ "$pause" = "false" ] ; then
-  echo "按要求未重启科学上网服务";
-  sleep 3s;
-else
-  /etc/init.d/$CLIEN restart;
-  echo "已重启$CLIEN";
-  echo "等待${sleepTime}秒后开始更新DNS！"
-  sleep ${sleepTime}s;
-fi
-
 # 开始循环
 echo "正在更新域名，请稍后..."
 x=0
