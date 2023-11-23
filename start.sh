@@ -1,22 +1,8 @@
 #!/bin/bash
-# Default config file
-config_file="/app/conf/config.conf"
-
-# Check if --cfg parameter is provided
-for i in "$@"
-do
-    if [ "$i" == "--cfg" ]
-    then
-        # Get the next argument as the config file
-        shift
-        config_file="$1"
-    fi
-done
-
-# Source the config file
-source "$config_file"
-
-source /app/cf_ddns/cf_check.sh
+# 程序开始脚本
+source /app/config/config.conf;
+source /app/cf_ddns/cf_check.sh;
+source /app/cf_ddns/crontab.sh;
 
 case $DNS_PROVIDER in
     1)
@@ -29,7 +15,6 @@ case $DNS_PROVIDER in
         echo "未选择任何DNS服务商"
         ;;
 esac
-
-source /app/cf_ddns/cf_push.sh
-
+source /app/cf_ddns/cf_push.sh;
+#tail -f /dev/null;
 exit 0;
