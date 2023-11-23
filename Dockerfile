@@ -8,7 +8,7 @@ RUN apk --update add tzdata && \
     apk del tzdata && \
     rm -rf /var/cache/apk/*
 WORKDIR /app
-COPY /app .
+COPY . /app
 RUN chmod +x /app/start.sh \
     chmod +x /app/cf_ddns/CloudflareST
 CMD ["/bin/sh", "-c", "/app/start.sh && tail -f /dev/null"]
