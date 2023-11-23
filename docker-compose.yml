@@ -7,4 +7,4 @@ services:
     environment:
       - TZ=Asia/Shanghai
     volumes:
-      - ./config:/app/config
+      - './config:/app/config:ro'
