@@ -21,12 +21,13 @@ TGURL="$tgapi/bot${telegramBotToken}/sendMessage"
 PushDeerURL="https://api2.pushdeer.com/message/push?pushkey=${PushDeerPushKey}"
 WX_tkURL="$wxapi/cgi-bin/gettoken"
 WXURL="$wxapi/cgi-bin/message/send?access_token="
+FeiShuURL="https://open.feishu.cn/open-apis/bot/v2/hook/${feishuToken}"
 
 ##飞书推送##
-if [[ -z ${feishu_url} ]]; then
+if [[ -z ${feishuToken} ]]; then
   echo "未配置飞书推送"
 else
-  res=$(curl -X POST -H "Content-type: application/json" -d '{"msg_type":"'"text"'","content":{"text":"'"$message_text"'"}}' $feishu_url)
+  res=$(curl -X POST -H "Content-type: application/json" -d '{"msg_type":"'"text"'","content":{"text":"'"$message_text"'"}}' $FeiShuURL)
 
   [ $? == 124 ] && echo "feishu_api请求超时,请检查网络"
 fi
