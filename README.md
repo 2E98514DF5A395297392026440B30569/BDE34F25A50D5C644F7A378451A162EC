@@ -1,4 +1,5 @@
 # CloudflareSpeedTestDDNS
+- [来源](https://github.com/lee1080/CloudflareSpeedTestDDNS)
 使用CloudflareSpeedTest工具优选IP后自动DDNS到Cloudflare
 
 ### 简易教程
