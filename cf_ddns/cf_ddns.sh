@@ -15,6 +15,6 @@ case $DNS_PROVIDER in
         echo "未选择任何DNS服务商"
         ;;
 esac
-source ./cf_ddns/cf_push.sh;
+source /app/cf_ddns/cf_push.sh;
 #tail -f /dev/null;
 exit 0;
