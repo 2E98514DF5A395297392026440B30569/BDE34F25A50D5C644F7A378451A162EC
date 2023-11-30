@@ -2,7 +2,7 @@
 ##用于CloudflareSpeedTestDDNS执行情况推送。
 
 # 推送消息内容
-message_text=$(echo "$(sed "$ ! s/$/\\\n/ " ./cf_ddns/informlog | tr -d '\n')")
+message_text=$(echo "$(sed "$ ! s/$/\\\n/ " /app/cf_ddns/informlog | tr -d '\n')")
 
 
 if [[ -z ${Proxy_TG} ]]; then
