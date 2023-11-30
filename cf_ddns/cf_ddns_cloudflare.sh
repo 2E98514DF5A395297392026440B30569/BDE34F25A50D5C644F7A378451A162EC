@@ -102,8 +102,10 @@ while [[ ${x} -lt $num ]]; do
   ipAddr=$(sed -n "$((x + 2)),1p" /app/cf_ddns/result.csv | awk -F, '{print $1}');
   ipSpeed=$(sed -n "$((x + 2)),1p" /app/cf_ddns/result.csv | awk -F, '{print $6}');
   if [ $ipSpeed = "0.00" ]; then
-    echo "第$((x + 1))个---$ipAddr测速为0，跳过更新DNS，检查配置是否能正常测速！";
+    echo "第$((x + 1))个---$ipAddr测速为$ipSpeed，跳过更新DNS，检查配置是否能正常测速！";
   else
+  
+  # --是否同步更新到hosts
     if [ "$IP_TO_HOSTS" = 1 ]; then
       echo $ipAddr $CDNhostname >> /app/cf_ddns/hosts_new
     fi
@@ -111,7 +113,7 @@ while [[ ${x} -lt $num ]]; do
     if [ "$IP_TO_CF" = 1 ]; then
       echo "开始更新第$((x + 1))个---$ipAddr"
 
-      # 开始DDNS
+      # 开始DDNS，判断ip类型
       if [[ $ipAddr =~ $ipv4Regex ]]; then
         recordType="A"
       else
