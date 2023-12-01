@@ -74,7 +74,10 @@ if [ "$IP_PR_IP" = "1" ] ; then
   fi
 elif [ "$IP_PR_IP" = "2" ] ; then
   if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr2_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
-    curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/zip_baipiao_eu_org/pr_ip.txt
+  # 获取反代IP2
+  curl https://zip.baipiao.eu.org --output ip.zip && unzip ip.zip && rm ip.zip
+  unzip -d /app/cf_ddns/ip2 ip.zip && cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt
+ #   curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/zip_baipiao_eu_org/pr_ip.txt
     echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
     echo "已更新线路2的反向代理列表"
   fi
