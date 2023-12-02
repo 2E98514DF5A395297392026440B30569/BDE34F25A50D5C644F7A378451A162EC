@@ -1,7 +1,7 @@
-#!/bin/bash
-#         用于CloudflareSpeedTestDDNS运行环境检测。
+# !/bin/bash
+# 用于CloudflareSpeedTestDDNS运行环境检测。
 
-#github下在CloudflareSpeedTest使用ghproxy代理
+# github下在CloudflareSpeedTest使用ghproxy代理
 PROXY=https://ghproxy.com/
 
 CloudflareST="/app/cf_ddns/CloudflareST"

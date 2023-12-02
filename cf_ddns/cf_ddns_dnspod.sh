@@ -1,6 +1,6 @@
-#!/bin/bash
-#		版本：20231004
-#         用于CloudflareST调用，更新hosts和更新dnspod DNS。
+# !/bin/bash
+#	版本：20231004
+# 用于CloudflareST调用，更新hosts和更新dnspod DNS。
 
 #set -euo pipefail
 ipv4Regex="((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])";

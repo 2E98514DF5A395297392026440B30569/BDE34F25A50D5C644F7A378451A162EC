@@ -1,5 +1,5 @@
 #!/bin/bash
-# 程序开始脚本
+# docker程序开始脚本
 source /app/config/config.conf;
 source /app/cf_ddns/cf_check.sh;
 source /app/cf_ddns/crontab.sh;
