@@ -142,7 +142,9 @@ update_record(){
     
         [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功，测速为 $ipSpeed MB/s" || echo "$CDNhostname更新失败"
         echo
-        echo ""$(date "+%Y-%m-%d %H:%M:%S")" 测速结果："
+        echo ""$(date "+%Y-%m-%d %H:%M:%S")" 测速详情："
+        echo "测速模式：${CFST_STM}，指定地区：${cfcolo}"
+        echo ""
         cat /app/cf_ddns/result.csv
       fi
     fi
