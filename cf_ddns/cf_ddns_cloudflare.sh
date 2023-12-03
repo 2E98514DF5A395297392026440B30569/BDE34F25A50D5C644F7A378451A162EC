@@ -140,7 +140,7 @@ update_record(){
           resSuccess=$(echo "$res" | jq -r ".success")
         fi
     
-        [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功" || echo "$CDNhostname更新失败"
+        [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功，测速为$ipSpeed" || echo "$CDNhostname更新失败"
       fi
     fi
     x=$((x + 1))
