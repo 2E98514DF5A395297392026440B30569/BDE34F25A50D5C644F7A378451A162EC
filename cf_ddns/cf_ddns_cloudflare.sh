@@ -140,7 +140,10 @@ update_record(){
           resSuccess=$(echo "$res" | jq -r ".success")
         fi
     
-        [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功，测速为$ipSpeed mb/s" || echo "$CDNhostname更新失败"
+        [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功，测速为 $ipSpeed MB/s" || echo "$CDNhostname更新失败"
+        echo
+        echo "$(date "+%Y-%m-%d %H:%M:%S")" +%s) 测速结果："
+        cat /app/cf_ddns/result.csv
       fi
     fi
     x=$((x + 1))
