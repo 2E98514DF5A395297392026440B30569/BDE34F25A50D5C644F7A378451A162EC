@@ -59,13 +59,13 @@ get_proxyip(){
     if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr1_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
     
       # 获取线路1的反代ip 到/app/cf_ddns/ip.zip
-      wget ${PROXY}https://github.com/ip-scanner/cloudflare/archive/refs/heads/daily.zip -P /app/cf_ddns/ -O ip.zip
+      wget ${PROXY}https://github.com/ip-scanner/cloudflare/archive/refs/heads/daily.zip -P /app/cf_ddns/ -O ip.zip &&
       
       # 解压到 /app/cf_ddns/ip1/
-      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip > /dev/null 2>&1 && mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/
+      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip > /dev/null 2>&1 && mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/ &&
       
       # 合并ip
-      cat /app/cf_ddns/ip1/*.txt >> /app/cf_ddns/pr_ip.txt
+      cat /app/cf_ddns/ip1/*.txt >> /app/cf_ddns/pr_ip.txt &&
       # 删除文件
       rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip1/
       
@@ -76,12 +76,12 @@ get_proxyip(){
     if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr2_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
 
       # 获取线路2的反代IP 到/app/cf_ddns/ip.zip
-      curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip
+      curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip &&
       
       # 解压到 /app/cf_ddns/ip2/
-      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip  > /dev/null 2>&1
+      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip  > /dev/null 2>&1 &&
       # 合并ip
-      cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt
+      cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt &&
       # 删除文件
       rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip2/
       
