@@ -57,18 +57,26 @@ get_proxyip(){
   # 检查是否配置反代IP
   if [ "$IP_PR_IP" = "1" ] ; then
     if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr1_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
-    # 获取线路1的反代ip
-      curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/pr_ip.txt
+    
+      # 获取线路1的反代ip 到/app/cf_ddns/ip.zip
+      wget ${PROXY}https://github.com/ip-scanner/cloudflare/archive/refs/heads/daily.zip -P /app/cf_ddns/ -O ip.zip
+      
+      # 解压到 /app/cf_ddns/ip1/ 
+      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip && rm /app/cf_ddns/ip.zip && cat /app/cf_ddns/ip1/*.txt >> /app/cf_ddns/pr_ip.txt
+      
+   #   curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/pr_ip.txt
       echo "{\"pr1_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路1的反向代理列表"
     fi
   elif [ "$IP_PR_IP" = "2" ] ; then
     if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr2_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
 
-      # 获取线路2的反代IP
-      curl https://zip.baipiao.eu.org --output ip.zip
+      # 获取线路2的反代IP 到/app/cf_ddns/ip.zip
+      curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip
+      
       # 解压到 /app/cf_ddns/ip2/ 
-      unzip -d /app/cf_ddns/ip2 ip.zip && rm ip.zip && cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt
+      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip && rm /app/cf_ddns/ip.zip && cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt
+      
       echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路2的反向代理列表"
     fi
