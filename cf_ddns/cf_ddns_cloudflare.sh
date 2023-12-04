@@ -57,6 +57,7 @@ get_proxyip(){
   # 检查是否配置反代IP
   if [ "$IP_PR_IP" = "1" ] ; then
     if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr1_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
+    # 获取线路1的反代ip
       curl -sSf -o /app/cf_ddns/pr_ip.txt https://cf.vbar.fun/pr_ip.txt
       echo "{\"pr1_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路1的反向代理列表"
