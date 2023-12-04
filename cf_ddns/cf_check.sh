@@ -2,7 +2,7 @@
 # 用于CloudflareSpeedTestDDNS运行环境检测。
 
 # github下在CloudflareSpeedTest使用ghproxy代理
-PROXY=https://ghproxy.com/
+PROXY=https://mirror.ghproxy.com/
 
 CloudflareST="/app/cf_ddns/CloudflareST"
 informlog="/app/cf_ddns/informlog"
