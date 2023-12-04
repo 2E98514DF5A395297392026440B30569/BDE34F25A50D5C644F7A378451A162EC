@@ -62,12 +62,12 @@ get_proxyip(){
       wget ${PROXY}https://github.com/ip-scanner/cloudflare/archive/refs/heads/daily.zip -P /app/cf_ddns/ -O ip.zip
       
       # 解压到 /app/cf_ddns/ip1/
-      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip && mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/
+      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip > /dev/null 2>&1 && mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/
       
       # 合并ip
       cat /app/cf_ddns/ip1/*.txt >> /app/cf_ddns/pr_ip.txt
       # 删除文件
-      rm /app/cf_ddns/ip.zip && rm -rf /app/cf_ddns/ip1/
+      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip1/
       
       echo "{\"pr1_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路1的反向代理列表"
@@ -79,11 +79,11 @@ get_proxyip(){
       curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip
       
       # 解压到 /app/cf_ddns/ip2/
-      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip
+      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip  > /dev/null 2>&1
       # 合并ip
       cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt
       # 删除文件
-      rm /app/cf_ddns/ip.zip && rm -rf /app/cf_ddns/ip2/
+      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip2/
       
       echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路2的反向代理列表"
