@@ -62,9 +62,10 @@ get_proxyip(){
       wget -O /app/cf_ddns/ip.zip ${PROXY}https://github.com/ip-scanner/cloudflare/archive/refs/heads/daily.zip &&
       
       # 解压到 /app/cf_ddns/ip1/
-      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip > /dev/null 2>&1 && mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/ &&
+      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip > /dev/null 2>&1 &&
+      mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/ &&
       cat /app/cf_ddns/ip1/*.txt >> /app/cf_ddns/pr_ip.txt &&
-      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip1/ &&
+      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip1/ && echo "成功获取ip"
       
       echo "{\"pr1_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路1的反向代理列表"
@@ -76,7 +77,7 @@ get_proxyip(){
       curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip &&
       unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip  > /dev/null 2>&1 &&
       cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt &&
-      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip2/ &&
+      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip2/ && echo "成功获取ip"
       
       echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路2的反向代理列表"
@@ -148,8 +149,8 @@ update_record(){
         [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功，测速为 $ipSpeed MB/s" || echo "$CDNhostname更新失败"
         # 输出信息
         echo -e "
-        $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
-        指定地区：${cfcolo}
+$(date "+%Y-%m-%d %H:%M:%S") 测速详情：
+指定地区：${cfcolo}
         
         "
         cat /app/cf_ddns/result.csv
