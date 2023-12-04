@@ -33,8 +33,8 @@ check_prepare(){
 check_model(){
   # 判断工作模式
   # 检测ip文件是否存在
-  [ ! -f "/app/cf_ddns/ipv4.txt" ] && curl https://mirror.ghproxy.com/https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ip.txt -o /app/cf_ddns/ipv4.txt
-  [ ! -f "/app/cf_ddns/ipv6.txt" ] && curl https://mirror.ghproxy.com/https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ipv6.txt -o /app/cf_ddns/ipv6.txt
+  [ ! -f "/app/config/ipv4.txt" ] && curl ${PROXY}https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ip.txt -o /app/config/ipv4.txt
+  [ ! -f "/app/config/ipv6.txt" ] && curl ${PROXY}https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ipv6.txt -o /app/config/ipv6.txt
   
   [ "$IP_ADDR" = "ipv6" ] && echo "当前工作模式为ipv6" || echo "当前工作模式为ipv4"
 }
