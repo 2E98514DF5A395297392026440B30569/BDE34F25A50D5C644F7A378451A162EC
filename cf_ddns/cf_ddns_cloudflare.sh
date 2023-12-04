@@ -32,16 +32,11 @@ check_prepare(){
 }
 check_model(){
   # 判断工作模式
-  if [ "$IP_ADDR" = "ipv6" ] ; then
-    if [ ! -f "/app/cf_ddns/ipv6.txt" ]; then
-      echo "当前工作模式为ipv6，但该目录下没有【ipv6.txt】，请配置【ipv6.txt】。下载地址：https://github.com/XIU2/CloudflareSpeedTest/releases";
-      exit 2;
-    else
-      echo "当前工作模式为ipv6";
-    fi
-  else
-    echo "当前工作模式为ipv4";
-  fi
+  # 检测ip文件是否存在
+  [ ! -f "/app/cf_ddns/ipv4.txt" ] && curl https://mirror.ghproxy.com/https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ip.txt -o /app/cf_ddns/ipv4.txt
+  [ ! -f "/app/cf_ddns/ipv6.txt" ] && curl https://mirror.ghproxy.com/https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ipv6.txt -o /app/cf_ddns/ipv6.txt
+  
+  [ "$IP_ADDR" = "ipv6" ] && echo "当前工作模式为ipv6" || echo "当前工作模式为ipv4"
 }
 
 check_path(){
