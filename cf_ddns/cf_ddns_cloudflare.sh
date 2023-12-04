@@ -153,10 +153,12 @@ update_record(){
         fi
     
         [[ $resSuccess = "true" ]] && echo "$CDNhostname更新成功，测速为 $ipSpeed MB/s" || echo "$CDNhostname更新失败"
-        echo
-        echo ""$(date "+%Y-%m-%d %H:%M:%S")" 测速详情："
-        echo "指定地区：${cfcolo}"
-        echo ""
+        # 输出信息
+        echo -e "
+        $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
+        指定地区：${cfcolo}
+        
+        "
         cat /app/cf_ddns/result.csv
       fi
     fi
