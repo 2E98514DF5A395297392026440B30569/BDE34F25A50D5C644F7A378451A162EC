@@ -61,8 +61,9 @@ get_proxyip(){
       # 获取线路1的反代ip 到/app/cf_ddns/ip.zip
       wget ${PROXY}https://github.com/ip-scanner/cloudflare/archive/refs/heads/daily.zip -P /app/cf_ddns/ -O ip.zip
       
-      # 解压到 /app/cf_ddns/ip1/ 
-      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip
+      # 解压到 /app/cf_ddns/ip1/
+      unzip -d /app/cf_ddns/ip1 /app/cf_ddns/ip.zip && mv /app/cf_ddns/ip1/cloudflare-daily/*.txt /app/cf_ddns/ip1/
+      
       # 合并ip
       cat /app/cf_ddns/ip1/*.txt >> /app/cf_ddns/pr_ip.txt
       # 删除文件
