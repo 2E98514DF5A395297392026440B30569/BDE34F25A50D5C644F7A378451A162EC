@@ -216,7 +216,6 @@ while [[ ${x} -lt $num ]]; do
         echo -e "
 $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
 指定地区：${cfcolo}
-        
         "
         cat /app/cf_ddns/result.csv
                 else
@@ -233,7 +232,6 @@ $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
         echo -e "
 $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
 指定地区：${cfcolo}
-        
         "
         cat /app/cf_ddns/result.csv
                 fi
@@ -255,7 +253,6 @@ $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
         echo -e "
 $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
 指定地区：${cfcolo}
-        
         "
         cat /app/cf_ddns/result.csv
       fi
