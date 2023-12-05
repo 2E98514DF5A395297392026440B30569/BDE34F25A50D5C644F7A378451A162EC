@@ -151,7 +151,6 @@ update_record(){
         echo -e "
 $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
 指定地区：${cfcolo}
-        
         "
         cat /app/cf_ddns/result.csv
       fi
