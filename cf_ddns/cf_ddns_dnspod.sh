@@ -212,6 +212,13 @@ while [[ ${x} -lt $num ]]; do
                     else
                       echo "$CDNhostname更新失败"
                     fi
+        # 输出信息
+        echo -e "
+$(date "+%Y-%m-%d %H:%M:%S") 测速详情：
+指定地区：${cfcolo}
+        
+        "
+        cat /app/cf_ddns/result.csv
                 else
                     # add DNS record for the domain
                     RESPONSE=$(curl -sX POST https://dnsapi.cn/Record.Create -d "login_token=$dnspod_token&format=json&domain=$DOMAIN_NAME&sub_domain=$SUBDOMAIN&record_line=$RECORD_LINE&record_type=$recordType" -d "value=$ipAddr")
@@ -222,6 +229,13 @@ while [[ ${x} -lt $num ]]; do
                     else
                       echo "$CDNhostname添加失败"
                     fi
+        # 输出信息
+        echo -e "
+$(date "+%Y-%m-%d %H:%M:%S") 测速详情：
+指定地区：${cfcolo}
+        
+        "
+        cat /app/cf_ddns/result.csv
                 fi
                 break
             fi
