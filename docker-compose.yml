@@ -1,4 +1,5 @@
 version: '3'
+# 不要在环境变量里设置时区，要不然时区会错
 services:
   cf_ddns:
     build: .
