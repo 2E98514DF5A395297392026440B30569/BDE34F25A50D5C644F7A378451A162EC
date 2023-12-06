@@ -1,4 +1,4 @@
-# !bin/bash
+#! /bin/bash
 
 # 把文件复制一份
 if [ ! -f /var/spool/cron/crontabs/root.bak ]; then 
