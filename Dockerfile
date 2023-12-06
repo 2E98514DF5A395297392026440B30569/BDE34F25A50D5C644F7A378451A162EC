@@ -13,4 +13,5 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
     rm -rf /var/cache/apk/* && \
     chmod +x /app/cf_ddns/CloudflareST && \
     chmod +x /app/start.sh
+
 CMD ["/bin/sh", "-c", "/app/start.sh && tail -f /dev/null"]
