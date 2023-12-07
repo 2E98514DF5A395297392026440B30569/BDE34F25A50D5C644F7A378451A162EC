@@ -28,8 +28,8 @@ else
     echo "未配置dnspod Token"
 fi
 
+source /app/cf_ddns/cf_test_speed.sh
 
-update_record(){
 # 开始循环
 echo "正在更新域名，请稍后...";
 x=0;
@@ -192,27 +192,19 @@ $(date "+%Y-%m-%d %H:%M:%S") 测速详情：
     sleep 3s;
 done > $informlog
 # 更新结束
-}
 
-update_hosts(){
-  if [ "$IP_TO_HOSTS" = 1 ]; then
-    if [ ! -f "/etc/hosts.old_cfstddns_bak" ]; then
-      cp /etc/hosts /etc/hosts.old_cfstddns_bak
-      cat /app/cf_ddns/hosts_new >> /etc/hosts
-    else
-      rm /etc/hosts
-      cp /etc/hosts.old_cfstddns_bak /etc/hosts
-      cat /app/cf_ddns/hosts_new >> /etc/hosts
-      echo "hosts已更新"
-      echo "hosts已更新" >> $informlog
-      rm /app/cf_ddns/hosts_new
-    fi
+
+# 更新hosts
+if [ "$IP_TO_HOSTS" = 1 ]; then
+  if [ ! -f "/etc/hosts.old_cfstddns_bak" ]; then
+    cp /etc/hosts /etc/hosts.old_cfstddns_bak
+    cat /app/cf_ddns/hosts_new >> /etc/hosts
+  else
+    rm /etc/hosts
+    cp /etc/hosts.old_cfstddns_bak /etc/hosts
+    cat /app/cf_ddns/hosts_new >> /etc/hosts
+    echo "hosts已更新"
+    echo "hosts已更新" >> $informlog
+    rm /app/cf_ddns/hosts_new
   fi
-}
-
-main(){
-  source /app/cf_ddns/cf_test_speed.sh
-  update_record;
-  update_hosts;
-}
-main
+fi
