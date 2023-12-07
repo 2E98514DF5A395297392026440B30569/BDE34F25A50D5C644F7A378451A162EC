@@ -42,7 +42,7 @@ while [[ ${x} -lt $num ]]; do
   if [ $ipSpeed = "0.00" ]; then
     echo "第$((x + 1))个---$ipAddr测速为 0，跳过更新DNS，检查配置是否能正常测速！";
   elif [[ -n "$CFST_SL" ]]; then
-    if [ `echo $ipSpeed < $CFST_SL | bc` -eq 1 ]; then
+    if [ $(echo "$ipSpeed < $CFST_SL" | bc) -eq 1 ]; then
       echo "第$((x + 1))个---$ipAddr测速为 ${ipSpeed}，小于设定值 ${CFST_SL}，跳过更新DNS！";
     fi
   else
