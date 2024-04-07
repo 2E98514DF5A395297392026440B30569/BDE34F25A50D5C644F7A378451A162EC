@@ -73,11 +73,12 @@ get_proxyip(){
   elif [ "$IP_PR_IP" = "2" ] ; then
     if [[ $(cat /app/cf_ddns/.pr_ip_timestamp | jq -r ".pr2_expires") -le $(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) ]]; then
 
-      # 获取线路2的反代IP 到/app/cf_ddns/ip.zip
-      curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip &&
-      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip  > /dev/null 2>&1 &&
-      cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt &&
-      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip2/ && echo "成功获取ip"
+      # 获取线路2的反代IP 到/app/cf_ddns/ip.zip 中转ip发布
+#      curl https://zip.baipiao.eu.org --output /app/cf_ddns/ip.zip &&
+#      unzip -d /app/cf_ddns/ip2 /app/cf_ddns/ip.zip  > /dev/null 2>&1 &&
+#      cat /app/cf_ddns/ip2/*.txt >> /app/cf_ddns/pr_ip.txt &&
+#      rm -rf /app/cf_ddns/ip.zip /app/cf_ddns/ip2/ && echo "成功获取ip"
+wget https://pan.narutos.top/d/%E5%88%86%E4%BA%AB/share/%E4%B8%AD%E8%BD%ACip/pr_ip.txt?sign=c4LVYkVR72_4OCyU3Bl-3XfnUz8BBlCynQTGGsYUff0=:0 -O /app/cf_ddns/pr_ip.txt && echo "成功获取ip"
       
       echo "{\"pr2_expires\":\"$(($(date -d "$(date "+%Y-%m-%d %H:%M:%S")" +%s) + 86400))\"}" > /app/cf_ddns/.pr_ip_timestamp
       echo "已更新线路2的反向代理列表"
