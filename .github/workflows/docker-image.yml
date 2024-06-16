@@ -16,17 +16,17 @@ jobs:
     runs-on: ubuntu-latest #申请一个ubuntu的虚拟机
 
     steps:
-    - name: Build the Docker image # 第一步，获取代码
+    - name: 1.Checkout Code # 第一步，获取代码
       uses: actions/checkout@v4 # 官方的action，获取代码
 
-    - name: Build image # 第二步，构建docker镜像
+    - name: 2.Build image # 第二步，构建docker镜像
       run: docker build . --file Dockerfile --tag yujibuzailai/cfstddns:$(date +%Y-%m-%d) # 2024-06-16
 
-    - name: Log in to Docker Hub # 第三步，登录docker hub
-      uses: docker/login-action@v1  # 三方的action操作， 执行docker login
+    - name: 3.Log in to Docker Hub # 第三步，登录docker hub
+      uses: docker/login-action@v3  # 三方的action操作， 执行docker login
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}  # 配置dockerhub的认证，在Github项目主页 【Settings】 -> 【Secrets】 添加对应变量
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
-    - name: Push image to Docker Hub # 第四步，推送镜像到docker hub 
+    - name: 4.Push image # 第四步，推送镜像到docker hub 
       run: docker push yujibuzailai/cfstddns:$(date +%Y-%m-%d)
